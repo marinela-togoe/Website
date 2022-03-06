@@ -60,3 +60,21 @@ document.body.addEventListener("mouseleave", () => {
  mouseDot.style.opacity = "0";
 });
 
+// Main Button
+const mainBtn = document.querySelector(".main-btn");
+
+mainBtn.addEventListener("mouseenter", (e) => {
+ const left = e.clientX - e.target.getBoundingClientRect().left;
+ const top = e.clientY - e.target.getBoundingClientRect().top;
+
+ ripple = document.createElement("div");
+ ripple.classList.add("ripple");
+ ripple.style.left = `${left}px`;
+ ripple.style.top = `${top}px`;
+ mainBtn.prepend(ripple);
+});
+
+mainBtn.addEventListener("mouseleave", () => {
+  mainBtn.removeChild(ripple);
+})
+// End of Main Button
