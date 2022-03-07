@@ -16,7 +16,7 @@
 html {
     /* 1 ram eqal to 10 pixels */
     font-size: 62.5%;  
-    
+    scroll-behavior: smooth;
 }
 .center {
     display: flex;
@@ -105,6 +105,22 @@ html {
     }
 }
 /* End of Main Button */
+
+/* Section Heading */
+.section-heading {
+    font-size: 2rem;
+    font-weight: 300;
+    color:goldenrod;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 10rem;
+    transform: translateY(-50%);
+    width: 0;
+    word-break: break-all;
+    line-height: 4;
+}
+/* End of Section Heading */
 /* End of Common Styles */
 
 /* Mouse Style */
@@ -177,7 +193,7 @@ html {
      position: fixed;
      width: 100%;
      height: 100vh;
-     background: linear-gradient(rgba(155, 14, 14, 0.8),rgb(37, 34, 34));
+     background: linear-gradient(rgba(155, 14, 14, 0.7),rgb(37, 34, 34));
      background-size: cover;
  }
 /* End of Page Background */
@@ -307,21 +323,6 @@ html {
     padding: 10rem 10rem 15rem 10rem;
 }
 
-/* Section 2 Heading */
-.section-2-heading {
-    font-size: 2rem;
-    font-weight: 300;
-    color:goldenrod;
-    text-transform: uppercase;
-    position: absolute;
-    top: 50%;
-    left: 10rem;
-    transform: translateY(-50%);
-    width: 0;
-    word-break: break-all;
-    line-height: 4;
-}
-/* End of Section 2 Heading */
 
 /* About Text */
 .about-text {
@@ -397,6 +398,7 @@ html {
     border-radius: 0.5rem;
     cursor: pointer;
     perspective: 20rem;
+    transition: opacity 0.5s;
 }
 
 .project img {
@@ -516,14 +518,18 @@ html {
     transform: translateX(-50%);
 }
 
+.projects-btn .main-btn-line {
+    transition: all 0.5s;
+}
+
 .change > .main-btn-line:nth-child(1) {
-   transform: roatateZ(45deg) translateX(-0.65rem);
+   transform: rotateZ(45deg) translateX(-0.65rem);
 }
 .change > .main-btn-line:nth-child(2) {
-   transform: roatateZ(-45deg) translateX(0.65rem);
+   transform: rotateZ(-45deg) translateX(0.65rem);
 }
 .change > .main-btn-line:nth-child(3) {
-   transform: roatateZ(90deg) translateX(-0.5rem);
+   transform: rotateZ(90deg) translateX(-0.5rem);
    border-left: 0.1rem solid bisque;
    border-right: none;
 }
