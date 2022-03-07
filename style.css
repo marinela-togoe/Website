@@ -509,4 +509,23 @@ html {
 }
 /* End of Project Hide Button */
 /* End of Projects */
+
+/* Projects Button */
+.projects-btn {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.change > .main-btn-line:nth-child(1) {
+   transform: roatateZ(45deg) translateX(-0.65rem);
+}
+.change > .main-btn-line:nth-child(2) {
+   transform: roatateZ(-45deg) translateX(0.65rem);
+}
+.change > .main-btn-line:nth-child(3) {
+   transform: roatateZ(90deg) translateX(-0.5rem);
+   border-left: 0.1rem solid bisque;
+   border-right: none;
+}
+/* End of Projects Button */
 /* End of Section 3 */
