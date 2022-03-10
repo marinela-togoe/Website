@@ -92,10 +92,22 @@ const halfCircles = document.querySelectorAll(".half-circle");
 const halfCircleTop = document.querySelector(".half-circle-top");
 const progressBarCircle = document.querySelector(".progress-bar-circle");
 
-const progressBarFn = () => {
+const progressBarFn = (bigImgWrapper = false) => {
+  let pageHeight = 0;
+  let scrolledPortion = 0;
   const pageViewportHeight = window.innerHeight;
-  const pageHeight = document.documentElement.scrollHeight;
-  const scrolledPortion = window.pageYOffset;
+
+
+  if (!bigImgWrapper) {
+    pageHeight = document.documentElement.scrollHeight;
+    scrolledPortion = window.pageYOffset;
+  } else {
+    pageHeight = bigImgWrapper.firstElementChild.scrollHeight;
+    scrolledPortion = bigImgWrapper.scrollTop;
+  }
+
+
+ 
 
   const scrolledPortionDegree = 
   (scrolledPortion / (pageHeight - pageViewportHeight)) * 360;
@@ -113,22 +125,30 @@ const progressBarFn = () => {
 
   const scrollBool = scrolledPortion + pageViewportHeight === pageHeight;
 
+  
+
   // Progress Bar Click
   progressBar.onclick = (e) => {
     e.preventDefault();
 
-    const sectionPositions = Array.from(sections).map((section) => 
-       scrolledPortion + section.
-      getBoundingClientRect().top
-    );
+    if (!bigImgWrapper) {
+      const sectionPositions = Array.from(sections).map(
+        (section) => scrolledPortion + section.getBoundingClientRect().top
+      );
 
-    const position = sectionPositions.find(sectionPosition => {
-      return sectionPosition > scrolledPortion
-    });
+      const position = sectionPositions.find((sectionPosition) => {
+        return sectionPosition > scrolledPortion;
+      });
 
-     scrollBool ? window.scrollTo(0, 0) : window.scrollTo(0, position);
-    console.log(position);
-  }
+      scrollBool ? window.scrollTo(0, 0) : window.scrollTo(0, position);
+    } else {
+      scrollBool 
+      ? bigImgWrapper.scrollTo(0, 0) 
+      : bigImgWrapper.scrollTo(0, bigImgWrapper
+      .scrollHeight);
+    }
+    
+  };
   // End of Progress Bar Click
 
   // Arrow Rotation
@@ -210,12 +230,20 @@ Array.from(aboutTextContent).forEach(char => {
     bigImgWrapper.appendChild(bigImg);
     document.body.style.overflowY = "hidden";
 
+    progressBarFn(bigImgWrapper);
+
+    bigImgWrapper.onscroll = () => {
+      progressBarFn(bigImgWrapper);
+    };
+
     projectHideBtn.classList.add("change");
 
     projectHideBtn.onclick = () => {
       projectHideBtn.classList.remove("change");
       bigImgWrapper.remove();
       document.body.style.overflowY = "scroll";
+
+      progressBarFn();
     }
   });
   // End of Big Project's image
