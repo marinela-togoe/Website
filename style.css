@@ -258,6 +258,7 @@ html {
     color:#ffdf8d;
     font-size: 4rem;
     z-index: 200;
+    transition: transform 0.5s;
 }
 /* End of Progress Bar */
 
