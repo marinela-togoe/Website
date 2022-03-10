@@ -198,6 +198,66 @@ html {
  }
 /* End of Page Background */
 
+/* Navigation */
+/* Menu Icon */
+.menu-icon {
+    position: fixed;
+    top: 0;
+    right: 6rem;
+    width: 12rem;
+    height: 7rem;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 100;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.menu-icon-line {
+    width: 4rem;
+    height: 0.1rem;
+    background-color: #ffdf8d;
+    margin: 0.5rem 0;
+    box-shadow: 0 0.3rem 0.5rem #000;
+    
+}
+
+.show-menu-icon {
+   opacity: 1;
+   visibility: visible; 
+}
+/* End of Menu Icon */
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 2.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 3rem;
+    z-index: 100;
+    transition: opacity 0.5s,
+    visibility 0.5s, transform 0.5s;
+}
+
+.navbar-link {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffdf8d;
+    margin: 0 2.5rem;
+    text-shadow: 0 0.3rem 0.5rem #000;
+}
+
+.hide-navbar {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10rem);
+}
+/* End of Navbar */
+/* End of Navigation */
+
 /* Section 1 */
 .section-1 {
     position: relative;
@@ -607,6 +667,7 @@ html {
     letter-spacing: 0.3rem;
     margin-bottom: 3rem; 
     transition: opacity 0.3s;
+    text-shadow: 0 0.3rem 0.5rem #000;
 }
 
 .contact-form {
@@ -639,7 +700,7 @@ html {
     border: none;
     align-self: flex-start;
     font-size: 1.8rem;
-    color: rgb(255, 223, 141);
+    color: #ffdf8d;
 }
 /* End of Form */
 
