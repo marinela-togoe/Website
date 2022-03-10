@@ -92,18 +92,22 @@ const halfCircles = document.querySelectorAll(".half-circle");
 const halfCircleTop = document.querySelector(".half-circle-top");
 const progressBarCircle = document.querySelector(".progress-bar-circle");
 
-const progressBarFn = (bigImgWrapper = false) => {
+let scrolledPortion = 0;
+let scrollBool = false;
+let imageWrapper = false;
+
+const progressBarFn = (bigImgWrapper) => {
+  imageWrapper = bigImgWrapper;
   let pageHeight = 0;
-  let scrolledPortion = 0;
   const pageViewportHeight = window.innerHeight;
 
 
-  if (!bigImgWrapper) {
+  if (!imageWrapper) {
     pageHeight = document.documentElement.scrollHeight;
     scrolledPortion = window.pageYOffset;
   } else {
-    pageHeight = bigImgWrapper.firstElementChild.scrollHeight;
-    scrolledPortion = bigImgWrapper.scrollTop;
+    pageHeight = imageWrapper.firstElementChild.scrollHeight;
+    scrolledPortion = imageWrapper.scrollTop;
   }
 
 
@@ -123,33 +127,9 @@ const progressBarFn = (bigImgWrapper = false) => {
     }
   });
 
-  const scrollBool = scrolledPortion + pageViewportHeight === pageHeight;
+  scrollBool = scrolledPortion + pageViewportHeight === pageHeight;
 
   
-
-  // Progress Bar Click
-  progressBar.onclick = (e) => {
-    e.preventDefault();
-
-    if (!bigImgWrapper) {
-      const sectionPositions = Array.from(sections).map(
-        (section) => scrolledPortion + section.getBoundingClientRect().top
-      );
-
-      const position = sectionPositions.find((sectionPosition) => {
-        return sectionPosition > scrolledPortion;
-      });
-
-      scrollBool ? window.scrollTo(0, 0) : window.scrollTo(0, position);
-    } else {
-      scrollBool 
-      ? bigImgWrapper.scrollTo(0, 0) 
-      : bigImgWrapper.scrollTo(0, bigImgWrapper
-      .scrollHeight);
-    }
-    
-  };
-  // End of Progress Bar Click
 
   // Arrow Rotation
   if (scrollBool) {
@@ -161,6 +141,30 @@ const progressBarFn = (bigImgWrapper = false) => {
   // End of Arrow Rotation
 };
 
+// Progress Bar Click
+  progressBar.addEventListener("click", e => {
+    e.preventDefault();
+
+    if (!imageWrapper) {
+      const sectionPositions = Array.from(sections).map(
+        (section) => scrolledPortion + section.getBoundingClientRect().top
+      );
+
+      const position = sectionPositions.find((sectionPosition) => {
+        return sectionPosition > scrolledPortion;
+      });
+
+      scrollBool ? window.scrollTo(0, 0) : window.scrollTo(0, position);
+    } else {
+      scrollBool 
+      ? imageWrapper.scrollTo(0, 0) 
+      : imageWrapper.scrollTo(0, imageWrapper
+      .scrollHeight);
+    }
+    
+  });
+  // End of Progress Bar Click
+
 progressBarFn();
 // End of Progress Bar
 
@@ -168,17 +172,19 @@ progressBarFn();
 const menuIcon = document.querySelector(".menu-icon");
 const navbar = document.querySelector(".navbar");
 
-document.addEventListener("scroll", () => {
- menuIcon.classList.add("show-menu-icon")
- navbar.classList.add("hide-navbar");
+const scrollFn = () => {
+  menuIcon.classList.add("show-menu-icon");
+  navbar.classList.add("hide-navbar");
 
- if (window.scrollY === 0) {
-   menuIcon.classList.remove("show-menu-icon")
-   navbar.classList.remove("hide-navbar");
+  if (window.scrollY === 0) {
+    menuIcon.classList.remove("show-menu-icon");
+    navbar.classList.remove("hide-navbar");
   }
 
   progressBarFn();
-});
+}
+
+document.addEventListener("scroll", scrollFn);
 
 menuIcon.addEventListener("click", () => {
   menuIcon.classList.remove("show-menu-icon")
@@ -218,30 +224,33 @@ Array.from(aboutTextContent).forEach(char => {
 
   // Big Project's image
   project.addEventListener("click", () => {
-    const bigImgWrapper = document.createElement("div");
-    bigImgWrapper.className = "project-img-wrapper";
-    container.appendChild(bigImgWrapper);
-
+    const imageWrapper = document.createElement("div");
+    imageWrapper.className = "project-img-wrapper";
+    container.appendChild(imageWrapper);
 
     const bigImg = document.createElement("img");
     bigImg.className = "project-img";
     const imgPath = project.firstElementChild.getAttribute("src").split(".")[0];
     bigImg.setAttribute("src",`${imgPath}-big.jpg`);
-    bigImgWrapper.appendChild(bigImg);
+    imageWrapper.appendChild(bigImg);
     document.body.style.overflowY = "hidden";
 
-    progressBarFn(bigImgWrapper);
+    document.removeEventListener("scroll", scrollFn);
 
-    bigImgWrapper.onscroll = () => {
-      progressBarFn(bigImgWrapper);
+    progressBarFn(imageWrapper);
+
+    imageWrapper.onscroll = () => {
+      progressBarFn(imageWrapper);
     };
 
     projectHideBtn.classList.add("change");
 
     projectHideBtn.onclick = () => {
       projectHideBtn.classList.remove("change");
-      bigImgWrapper.remove();
+      imageWrapper.remove();
       document.body.style.overflowY = "scroll";
+
+      document.addEventListener("scroll", scrollFn);
 
       progressBarFn();
     }
